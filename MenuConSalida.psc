@@ -18,4 +18,6 @@ Algoritmo menuPrincipal
         Fin Segun
     Hasta Que opcion = 3 O opcion = -1
 	
+	
+	Escribir "prueba de actualizacion de codigo"
 FinAlgoritmo
