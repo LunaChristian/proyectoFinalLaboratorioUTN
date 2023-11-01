@@ -38,7 +38,7 @@ Funcion seleccionPaciente()
         Leer opcion
 		
         Segun opcion Hacer
-            1: // Funcion para ingreso por particular
+            1: ingresoDatos()
             2: // Funcion para ingreso por Obra social
             3: // Funcion para ingreso por Empresa
 			4: borrar pantalla
@@ -56,7 +56,29 @@ Funcion ingresoDatos()
 	Definir nombre Como Caracter
 	Escribir "Dentro de la funcion de ingresos de datos"
 	Escribir "Ingrese el nombre: "
-	leer nombre
+	Escribir "ya se ingreso"
+//	leer nombre
+	
+	seleccionServicios()
+FinFuncion
+
+Funcion seleccionServicios()
+	Escribir "dentro de seleccionServicios"
+	//seleccionar los servicios desde bbdd
+	//aca va la formula para calcular los costos
+	funcionCalculo()
+FinFuncion
+
+Funcion emitirFactura()
+	Escribir "Emision de factura"
+	//Esto deberia devolver datos a la bbdd facturacion
+	menuPrincipal()
+FinFuncion
+
+Funcion funcionCalculo()
+	Escribir "dentro de funcionCalculo"
+	// esto no deberia imprimir por pantalla
+	// ver con Palomino
 FinFuncion
 
 Funcion tipoFacturacion()
@@ -84,6 +106,18 @@ Funcion tipoFacturacion()
     Hasta Que opcion = -1
 FinFuncion
 
+Funcion cierreCaja()
+	Escribir "dentro de cierreCaja"
+	//llamar a una funcion para calcular el cierre total de facturacion
+	//toma datos de la bbdd facturacion
+FinFuncion
+
+Funcion facturacionDiscriminada()
+	Escribir "dentro de facturacionDiscriminada"
+	//llamar a una funcion para calcular el cierre total de facturacion
+	//toma datos de la bbdd facturacion
+FinFuncion
+
 Funcion salida() // funcion para la salida del programa. Algo que genere transicion
 	Para i=0 Hasta 4 Con Paso 1 Hacer
 		Borrar Pantalla
@@ -103,4 +137,3 @@ Funcion salida() // funcion para la salida del programa. Algo que genere transic
 	Esperar 190 Milisegundos	
 	Escribir "Gracias por usar nuestro software."
 FinFuncion
-	
