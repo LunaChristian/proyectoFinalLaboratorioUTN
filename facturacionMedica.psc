@@ -2,16 +2,33 @@ Algoritmo servicioMedico
 	Definir largoVector, validacion como entero
 	largoVector <- 150
 	Dimension vectorUsuarios[largoVector], vectorClaves[largoVector], vectorPacientes[largoVector];
+	Dimension vectorDni[largoVector], vectorNombre[largoVector], vectorApellido[largoVector], vectorEdad[largoVector], vectorTelefono[largoVector], vectorEmail[largoVector];
 	
+	/// Datos aleatorios de usuarios registrados
 	vectorUsuarios[1] <- "Admin"; vectorClaves[1] <- "Admin"
 	vectorUsuarios[2] <- "User1"; vectorClaves[2] <- "123"
 	vectorUsuarios[3] <- "User2"; vectorClaves[3] <- "234"
 	vectorUsuarios[4] <- "User3"; vectorClaves[4] <- "345"
 	vectorUsuarios[5] <- "User4"; vectorClaves[5] <- "456"
 	
-	/// Para probar hay que generar un vector con azar para los dni, nombres, apellidos y edad. Meter todo en un Para para rellenar el vectorPacientes
+	/// Datos aleatorios de pacientes registrados
+	vectorDni[1] <- 35421987; vectorNombre[1] <- "Juan"; vectorApellido[1] <- Perez, vectorEdad[1] <- 25, vectorTelefono[1] <- 1122334455, vectorEmail[1] <- juan.perez@example.com
+	vectorDni[2] <- 41170632, vectorNombre[2] <- Maria, vectorApellido[2] <- Gonzalez, vectorEdad[2] <- 30, vectorTelefono[2] <- 9988776655, vectorEmail[2] <- maria.gonzalez@example.com
+	vectorDni[3] <- 30589024, vectorNombre[3] <- Carlos, vectorApellido[3] <- Rodriguez, vectorEdad[3] <- 22, vectorTelefono[3] <- 5544332211, vectorEmail[3] <- carlos.rodriguez@example.com
+	vectorDni[4] <- 44351876, vectorNombre[4] <- Laura, vectorApellido[4] <- Lopez, vectorEdad[4] <- 28, vectorTelefono[4] <- 7788996655, vectorEmail[4] <- laura.lopez@example.com
+	vectorDni[5] <- 26073241, vectorNombre[5] <- Andres, vectorApellido[5] <- Garcia, vectorEdad[5] <- 35, vectorTelefono[5] <- 3366998877, vectorEmail[5] <- andres.garcia@example.com
+	vectorDni[6] <- 39857214, vectorNombre[6] <- Ana, vectorApellido[6] <- Martinez, vectorEdad[6] <- 29, vectorTelefono[6] <- 1122332211, vectorEmail[6] <- ana.martinez@example.com
+	vectorDni[7] <- 35540892, vectorNombre[7] <- Pablo, vectorApellido[7] <- Sanchez, vectorEdad[7] <- 32, vectorTelefono[7] <- 8899776655, vectorEmail[7] <- pablo.sanchez@example.com
+	vectorDni[8] <- 42673850, vectorNombre[8] <- Gabriela, vectorApellido[8] <- Diaz, vectorEdad[8] <- 26, vectorTelefono[8] <- 5544669988, vectorEmail[8] <- gabriela.diaz@example.com
+	vectorDni[9] <- 23895042, vectorNombre[9] <- Javier, vectorApellido[9] <- Fernandez, vectorEdad[9] <- 31, vectorTelefono[9] <- 1122336677, vectorEmail[9] <- javier.fernandez@example.com
+	vectorDni[10] <- 40712589, vectorNombre[10] <- Carolina, vectorApellido[10] <- Ramirez, vectorEdad[10] <- 27, vectorTelefono[10] <- 9988771122, vectorEmail[10] <- carolina.ramirez@example.com
+	Para i <- 1 Hasta 10 Con Paso 1
+		Escribir "DNI: ", vectorDni[i], " Nombre: ", vectorNombre[i], " Apellido: ", vectorApellido[i])
+		Escribir "Edad: ", vectorEdad[i], " Teléfono: ", vectorTelefono[i], " Email: ", vectorEmail[i])
+		Escribir("")  // Salto de línea para separar cada conjunto de datos
+	Fin Para
 	
-	//Esperar 4 segundos
+	Esperar 330 segundos
 	//pantallaLogo();
 	
 	//devoler booleano para ingresar al menuPrincipal?
