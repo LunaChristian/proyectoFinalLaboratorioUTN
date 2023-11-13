@@ -1,20 +1,21 @@
 Algoritmo servicioMedico
-	Definir largoVector, validacion como entero
-	largoVector <- 150
-	Dimension vectorUsuarios[largoVector], vectorClaves[largoVector], vectorPacientes[largoVector], nomDesc[largoVector], nomPrec[largoVector];
-	Dimension vectorDni[largoVector], vectorNombre[largoVector], vectorApellido[largoVector], vectorEdad[largoVector], vectorTelefono[largoVector], vectorEmail[largoVector];
+	Definir long, validacion, contador como entero
+	long <- 10
+
+	Dimension vectorUsuarios[long], vectorClaves[long], vectorPacientes[long], nomDesc[long], nomPrec[long], nomHon[long], nomValH[long], nomGasto[long], nomValG[long];
+	Dimension vectorDni[long], vectorNombre[long], vectorApellido[long], vectorEdad[long], vectorTelefono[long], vectorEmail[long];
 	
 	/// Datos aleatorios de prestaciones medicas
-	nomDesc[1] <- "Hemograma completo"; nomPrec[1] <- 50;
-	nomDesc[2] <- "Electrocardiograma (ECG)"; nomPrec[2] <- 30;
-	nomDesc[3] <- "Radiografia de torax"; nomPrec[3] <- 40;
-	nomDesc[4] <- "Prueba de coagulacion"; nomPrec[4] <- 25;
-	nomDesc[5] <- "Evaluacion de funcion renal"; nomPrec[5] <- 35;
-	nomDesc[6] <- "Prueba de funcion hepatica"; nomPrec[6] <- 30;
-	nomDesc[7] <- "Glicemia en ayunas"; nomPrec[7] <- 20;
-	nomDesc[8] <- "Grupo sanguineo y factor Rh"; nomPrec[8] <- 15;
-	nomDesc[9] <- "Evaluacion de funcion pulmonar"; nomPrec[9] <- 45;
-	nomDesc[10] <- "Prueba de VIH"; nomPrec[10] <- 50;
+	nomDesc[1]<-"Hemograma completo";				nomPrec[1]<-50;	nomHon[1]<-22.4;		nomValH[1]<-50;	nomGasto[1]<-50;		nomValG[1]<-6;
+	nomDesc[2]<-"Electrocardiograma (ECG)";			nomPrec[2]<-30;	nomHon[2]<-3.94;		nomValH[2]<-11;	nomGasto[2]<-30;		nomValG[2]<-3;
+	nomDesc[3]<-"Radiografia de torax";				nomPrec[3]<-40;	nomHon[3]<-11.5;		nomValH[3]<-30;	nomGasto[3]<-40;		nomValG[3]<-3;
+	nomDesc[4]<-"Prueba de coagulacion";				nomPrec[4]<-25;	nomHon[4]<-22.4;		nomValH[4]<-36;	nomGasto[4]<-25;		nomValG[4]<-6;
+	nomDesc[5]<-"Evaluacion de funcion renal";		nomPrec[5]<-35;	nomHon[5]<-3.94;		nomValH[5]<-10;	nomGasto[5]<-35;		nomValG[5]<-6;
+	nomDesc[6]<-"Prueba de funcion hepatica";		nomPrec[6]<-30;	nomHon[6]<-3.94;		nomValH[6]<-35;	nomGasto[6]<-30;		nomValG[6]<-3;
+	nomDesc[7]<-"Glicemia en ayunas";				nomPrec[7]<-20;	nomHon[7]<-22.4;		nomValH[7]<-11;	nomGasto[7]<-20;		nomValG[7]<-3;
+	nomDesc[8]<-"Grupo sanguineo y factor Rh";		nomPrec[8]<-15;	nomHon[8]<-22.4;		nomValH[8]<-35;	nomGasto[8]<-15;		nomValG[8]<-6;
+	nomDesc[9]<-"Evaluacion de funcion pulmonar";	nomPrec[9]<-45;	nomHon[9]<-3.94;		nomValH[9]<-34;	nomGasto[9]<-45;		nomValG[9]<-3;
+	nomDesc[10]<-"Prueba de VIH";					nomPrec[10]<-50;	nomHon[10]<-22.4;	nomValH[10]<-48;	nomGasto[10]<-50;	nomValG[10]<-6;
 
 	/// Datos aleatorios de usuarios registrados
 	vectorUsuarios[1] <- "Admin"; vectorClaves[1] <- "Admin"
@@ -46,22 +47,31 @@ Algoritmo servicioMedico
 	//pantallaLogo();
 	
 	//devoler booleano para ingresar al menuPrincipal?
-	validacion <- login(largoVector, vectorUsuarios, vectorClaves)
+	validacion <- login(long, vectorUsuarios, vectorClaves)
 	
 	Si validacion = 1 Entonces
 		//pantallaIngreso()
-		menuPrincipal(largoVector, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail)
+		menuPrincipal(long, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail, nomDesc, nomHon, nomValH, nomGasto, nomValG)
 	SiNo
-		Borrar Pantalla
-		Escribir "El usuario y/o contraseña son incorrectos"
+		contador <- 1;
+		Repetir
+			Borrar Pantalla
+			contador <- contador + 1
+			Escribir "El usuario y/o contraseña son incorrectos"
+			Esperar 1500 Milisegundos
+			Borrar Pantalla
+			validacion <- login(long, vectorUsuarios, vectorClaves)
+		Hasta Que contador > 3
+		Escribir "Ha ingresado usuario y/o contraseña son incorrectos por mas de 3 intentos"
 		Esperar 1500 Milisegundos
-		//ver el loop para volver al menu inicial
+		Borrar Pantalla
+		pantallaSalida();
 	FinSi
 FinAlgoritmo
 
 //Login de usuarios
 //La siguiente funcion tiene que devolver un booleano
-Funcion flag <- login(largoVector Por valor, vectorUsuarios, vectorClaves Por Referencia)
+Funcion flag <- login(long Por valor, vectorUsuarios, vectorClaves Por Referencia)
 	Definir indice Como Entero
 	Definir usuario, clave Como Caracter
 	
@@ -70,7 +80,7 @@ Funcion flag <- login(largoVector Por valor, vectorUsuarios, vectorClaves Por Re
 	Escribir "Clave" Sin saltar; leer clave;
 	
 	//logica de busqueda
-	para i <- 1 hasta largoVector Con Paso 1 Hacer
+	para i <- 1 hasta long Con Paso 1 Hacer
 		si usuario = vectorUsuarios[i] Entonces
 			indice <- i;
 		FinSi
@@ -84,7 +94,7 @@ Funcion flag <- login(largoVector Por valor, vectorUsuarios, vectorClaves Por Re
 	FinSi
 FinFuncion
 
-Funcion menuPrincipal(largoVector Por Valor, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail Por Referencia)
+Funcion menuPrincipal(long Por Valor, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail, nomDesc, nomHon, nomValH, nomGasto, nomValG Por Referencia)
 	Definir opcion Como Entero
 	Escribir "Menú principal:"
 	Escribir "1. Facturar servicio"
@@ -95,7 +105,7 @@ Funcion menuPrincipal(largoVector Por Valor, vectorDni, vectorNombre, vectorApel
 	
 	Segun opcion Hacer
 		1: Borrar Pantalla //este comando borra deja la pantalla limpia
-			seleccionPaciente(largoVector, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail)
+			seleccionPaciente(long, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail, nomDesc, nomHon, nomValH, nomGasto, nomValG)
 		2: Borrar Pantalla //este comando borra deja la pantalla limpia
 			//tipoFacturacion()
 		3: Borrar Pantalla
@@ -104,7 +114,7 @@ Funcion menuPrincipal(largoVector Por Valor, vectorDni, vectorNombre, vectorApel
 	Fin Segun
 FinFuncion
 
-Funcion seleccionPaciente(largoVector Por Valor, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail Por Referencia)
+Funcion seleccionPaciente(long Por Valor, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail, nomDesc, nomHon, nomValH, nomGasto, nomValG Por Referencia)
 	Definir flagTipoPac Como Entero
 	
 	Escribir "Menú ingreso de paciente"
@@ -121,23 +131,23 @@ Funcion seleccionPaciente(largoVector Por Valor, vectorDni, vectorNombre, vector
 			//Como es la misma funcion para las 3 opciones poner un flag
 			//para determinar el tipo de facturacion despues
 		1: borrar pantalla
-			ingresoDatos(flagTipoPac, largoVector, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail)
+			ingresoDatos(flagTipoPac, long, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail, nomDesc, nomHon, nomValH, nomGasto, nomValG)
 		2: borrar pantalla
-			ingresoDatos(flagTipoPac, largoVector, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail)
+			ingresoDatos(flagTipoPac, long, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail, nomDesc, nomHon, nomValH, nomGasto, nomValG)
 		3: borrar pantalla
-			ingresoDatos(flagTipoPac, largoVector, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail)
+			ingresoDatos(flagTipoPac, long, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail, nomDesc, nomHon, nomValH, nomGasto, nomValG)
 		4: borrar pantalla
-			menuPrincipal(largoVector, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail)
+			menuPrincipal(long, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail, nomDesc, nomHon, nomValH, nomGasto, nomValG)
 		De Otro Modo:
 			Borrar Pantalla
 			Escribir "Opción inválida. Redirigiendo al menu"
 			Esperar 1500 Milisegundos
 			Borrar Pantalla
-			seleccionPaciente(largoVector, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail)
+			seleccionPaciente(long, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail, nomDesc, nomHon, nomValH, nomGasto, nomValG)
 	Fin Segun
 FinFuncion
 
-Funcion ingresoDatos(flagTipoPac, largoVector Por valor, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail Por Referencia)
+Funcion ingresoDatos(flagTipoPac, long Por valor, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail, nomDesc, nomHon, nomValH, nomGasto, nomValG Por Referencia)
 	//altaConsumidor()
 	Definir dni, cuit Como Entero
 	Escribir "Dentro de la funcion de ingresos de datos"
@@ -150,20 +160,22 @@ Funcion ingresoDatos(flagTipoPac, largoVector Por valor, vectorDni, vectorNombre
 				Escribir "El numero ingresado no es un dni valido"
 				Esperar 1200 Milisegundos
 				Borrar Pantalla
-				ingresoDatos(flagTipoPac, largoVector, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail)
+				ingresoDatos(flagTipoPac, long, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail, nomDesc, nomHon, nomValH, nomGasto, nomValG)
 			SiNo
-				Para i <- 1 hasta largoVector Con Paso 1 Hacer
+				Para i <- 1 hasta long Con Paso 1 Hacer
 					Si dni = vectorDni[i] Entonces
-						Escribir "Nombre y apellido: ",vectorNombre[i]," ", vectorApellido[i];
+						Escribir "Paciente: "
+						Escribir "Nombre: ", vectorNombre[i];
+						Escribir "Apellido: ", vectorApellido[i];
 						Escribir "DNI: ",vectorDni[i];
 						Escribir "Edad: ",vectorEdad[i];
 						Escribir "Telefono: ",vectorTelefono[i];
 						Escribir "email: ",vectorEmail[i];
 						Escribir "";
-						Escribir "Enter para continuar"
+						Escribir "Presione enter para continuar"
 						Esperar Tecla
 						Borrar Pantalla
-						
+						seleccionServicios(long, nomDesc, nomHon, nomValH, nomGasto, nomValG)
 					SiNo
 						///aca va opciones de dar de alta 
 					FinSi
@@ -178,7 +190,7 @@ Funcion ingresoDatos(flagTipoPac, largoVector Por valor, vectorDni, vectorNombre
 				Escribir "El numero ingresado no es un dni valido"
 				Esperar 1500 Milisegundos
 				Borrar Pantalla
-				ingresoDatos(flagTipoPac, largoVector, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail)
+				ingresoDatos(flagTipoPac, long, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail, nomDesc, nomHon, nomValH, nomGasto, nomValG)
 			SiNo
 				Para i <- 1 hasta largoVector Con Paso 1 Hacer
 					Si dni = vectorDni[i] Entonces
@@ -196,7 +208,7 @@ Funcion ingresoDatos(flagTipoPac, largoVector Por valor, vectorDni, vectorNombre
 				Escribir "El numero ingresado no es un cuit valido"
 				Esperar 1500 Milisegundos
 				Borrar Pantalla
-				ingresoDatos(flagTipoPac, largoVector, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail)
+				ingresoDatos(flagTipoPac, long, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail, nomDesc, nomHon, nomValH, nomGasto, nomValG)
 			SiNo
 				Para i <- 1 hasta largoVector Con Paso 1 Hacer
 					Si dni = vectorDni[i] Entonces
@@ -208,28 +220,105 @@ Funcion ingresoDatos(flagTipoPac, largoVector Por valor, vectorDni, vectorNombre
 				Esperar 1500 milisegundos
 			FinSi
 	FinSegun
-	// buscar los datos en un vector y devolverlos por pantalla para confirmar si ya existiera
-	//seleccionServicios()
 FinFuncion
 
 Funcion altaConsumidor()
 	
 FinFuncion
 
-Funcion seleccionServicios
-	Escribir "dentro de seleccionServicios"
-	//seleccionar los servicios desde bbdd
-	//aca va la formula para calcular los costos
-	funcionCalculo()
+Funcion seleccionServicios(long, nomDesc, nomHon, nomValH, nomGasto, nomValG Por Referencia)
+	Definir aux, selec, limite, num Como Entero
+	Dimension seleccion[10]
+	aux <- -1; limite <- 0;
+	
+	para i <- 1 hasta 10 Con Paso 1 Hacer
+		seleccion[i] <- 0;
+	FinPara
+	
+	Repetir
+		Escribir "Seleccion de servicios"
+		Escribir "Ingrese de a uno los codigos. 0 para terminar"
+		Escribir ""
+		
+		Para i <- 1 hasta long Con Paso 1 Hacer
+			Escribir i, "- ", nomDesc[i];
+		FinPara
+		
+		Leer cod
+		
+		si cod > 0 Y cod <= 10 Entonces
+			limite <- limite + 1
+			para n <- 1 hasta 10 con paso 1 Hacer
+				si cod = seleccion[n] Entonces
+					Escribir "El servicio ya fue seleccionado";
+					limite <- limite - 1;
+				SiNo
+					seleccion[limite+1] <- cod;
+				FinSi
+			FinPara
+		FinSi
+		
+		si cod < 0 O cod >= 11 Entonces
+			Escribir "El codigo no es valido"
+			Esperar 2 segundos
+		SiNo
+			si cod = 0 Entonces
+				aux <- 0;
+			FinSi			
+		FinSi
+		limite <- limite + 1
+		Borrar Pantalla
+	Hasta Que aux = 0 O limite = 10
+	
+	///muestra el listado de servicios seleccionados
+	
+	Escribir "Servicios seleccionados: ";
+	Escribir "";
+	Para i <- 1 hasta limite - 1 con paso 1 Hacer
+		num <- seleccion[i]
+		Escribir i, "- " nomDesc[num];
+		Escribir "Costo: $", (nomHon[num]*nomValH[num])+(nomGasto[num]*nomValG[num]);
+		Escribir ""
+	FinPara
+	Escribir "--------------------------------------------";
+	Escribir "Ingrese una opcion: 1- Facturar 2- Modificar"
+	Leer selec
+	
+	Segun selec Hacer
+		1: Borrar Pantalla
+			emitirFactura(num, limite, seleccion, nomDesc, nomHon, nomValH, nomGasto, nomValG)
+			
+		2:	Borrar pantalla
+			seleccionServicios(long, nomDesc, nomHon, nomValH, nomGasto, nomValG)
+		De otro modo:
+			Mientras selec <> 1 o selec <> 2 Hacer
+				Escribir ""
+				Escribir "********* La opcion es invalida *********"
+				Escribir "--------------------------------------------";
+				Escribir "Ingrese una opcion: 1- Facturar 2- Modificar"
+				leer selec
+			FinMientras
+	FinSegun
 FinFuncion
-//
-//Funcion emitirFactura
-//	Escribir "Emision de factura"
-//	//Esto deberia devolver datos a la bbdd facturacion
-//	menuPrincipal
-//FinFuncion
 
-Funcion funcionCalculo
+Funcion emitirFactura(num, limite, seleccion, nomDesc, nomHon, nomValH, nomGasto, nomValG Por Referencia)
+	Definir acum Como Real
+	Escribir "Factura n° " Aleatorio(1456, 2869)
+	
+	Escribir "Servicios seleccionados: ";
+	Escribir "";
+	Para i <- 1 hasta limite - 1 con paso 1 Hacer
+		num <- seleccion[i]
+		Escribir i, "- " nomDesc[num];
+		Escribir "Costo: $", (nomHon[num]*nomValH[num])+(nomGasto[num]*nomValG[num]);
+		acum <- acum + (nomHon[num]*nomValH[num])+(nomGasto[num]*nomValG[num]);
+		Escribir ""
+		Escribir "Subtotal: $" acum
+		Escribir "IVA (21.00): $" redon(acum * 1.21)
+	FinPara
+FinFuncion
+
+Funcion funcionCalculo(num Por Referencia)
 	Escribir "dentro de funcionCalculo"
 	// esto no deberia imprimir por pantalla
 	// ver con Palomino
