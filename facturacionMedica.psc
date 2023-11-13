@@ -287,7 +287,10 @@ Funcion seleccionServicios(long, nomDesc, nomHon, nomValH, nomGasto, nomValG Por
 	Segun selec Hacer
 		1: Borrar Pantalla
 			emitirFactura(num, limite, seleccion, nomDesc, nomHon, nomValH, nomGasto, nomValG)
-			
+			Escribir "Presione enter para continuar"
+			Esperar Tecla
+			Borrar pantalla
+			menuPrincipal(long, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail, nomDesc, nomHon, nomValH, nomGasto, nomValG)
 		2:	Borrar pantalla
 			seleccionServicios(long, nomDesc, nomHon, nomValH, nomGasto, nomValG)
 		De otro modo:
