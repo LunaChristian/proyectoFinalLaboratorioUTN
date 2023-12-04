@@ -1,57 +1,24 @@
 Algoritmo servicioMedico
 	Definir long, validacion, contador como entero
-	long <- 10
+	long <- 10;
 
 	Dimension vectorUsuarios[long], vectorClaves[long], vectorPacientes[long], nomDesc[long], nomPrec[long], nomHon[long], nomValH[long], nomGasto[long], nomValG[long];
 	Dimension vectorDni[long], vectorNombre[long], vectorApellido[long], vectorEdad[long], vectorTelefono[long], vectorEmail[long];
 	
-	/// Datos aleatorios de prestaciones medicas
-	nomDesc[1]<-"Hemograma completo";				nomPrec[1]<-50;	nomHon[1]<-22.4;		nomValH[1]<-50;	nomGasto[1]<-50;		nomValG[1]<-6;
-	nomDesc[2]<-"Electrocardiograma (ECG)";			nomPrec[2]<-30;	nomHon[2]<-3.94;		nomValH[2]<-11;	nomGasto[2]<-30;		nomValG[2]<-3;
-	nomDesc[3]<-"Radiografia de torax";				nomPrec[3]<-40;	nomHon[3]<-11.5;		nomValH[3]<-30;	nomGasto[3]<-40;		nomValG[3]<-3;
-	nomDesc[4]<-"Prueba de coagulacion";				nomPrec[4]<-25;	nomHon[4]<-22.4;		nomValH[4]<-36;	nomGasto[4]<-25;		nomValG[4]<-6;
-	nomDesc[5]<-"Evaluacion de funcion renal";		nomPrec[5]<-35;	nomHon[5]<-3.94;		nomValH[5]<-10;	nomGasto[5]<-35;		nomValG[5]<-6;
-	nomDesc[6]<-"Prueba de funcion hepatica";		nomPrec[6]<-30;	nomHon[6]<-3.94;		nomValH[6]<-35;	nomGasto[6]<-30;		nomValG[6]<-3;
-	nomDesc[7]<-"Glicemia en ayunas";				nomPrec[7]<-20;	nomHon[7]<-22.4;		nomValH[7]<-11;	nomGasto[7]<-20;		nomValG[7]<-3;
-	nomDesc[8]<-"Grupo sanguineo y factor Rh";		nomPrec[8]<-15;	nomHon[8]<-22.4;		nomValH[8]<-35;	nomGasto[8]<-15;		nomValG[8]<-6;
-	nomDesc[9]<-"Evaluacion de funcion pulmonar";	nomPrec[9]<-45;	nomHon[9]<-3.94;		nomValH[9]<-34;	nomGasto[9]<-45;		nomValG[9]<-3;
-	nomDesc[10]<-"Prueba de VIH";					nomPrec[10]<-50;	nomHon[10]<-22.4;	nomValH[10]<-48;	nomGasto[10]<-50;	nomValG[10]<-6;
-
-	/// Datos aleatorios de usuarios registrados
-	vectorUsuarios[1] <- "Admin"; vectorClaves[1] <- "Admin"
-	vectorUsuarios[2] <- "User1"; vectorClaves[2] <- "123"
-	vectorUsuarios[3] <- "User2"; vectorClaves[3] <- "234"
-	vectorUsuarios[4] <- "User3"; vectorClaves[4] <- "345"
-	vectorUsuarios[5] <- "User4"; vectorClaves[5] <- "456"
+	//Inicializacion de vectores (BBDD)
+	inicioVectorNomenclador(nomDesc, nomPrec, nomHon, nomValH, nomGasto, nomValG);
+	inicioVectorUsuarios(vectorUsuarios, vectorClaves);
+	inicioVectorDatosPers(vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail);
 	
-	/// Datos aleatorios de pacientes registrados
-	vectorDni[1] <- 35421987; vectorNombre[1] <- "Juan"; vectorApellido[1] <- "Perez"; vectorEdad[1] <- 25; vectorTelefono[1] <- 1122334455; vectorEmail[1] <- "juan.perez@example.com"
-	vectorDni[2] <- 41170632; vectorNombre[2] <- "Maria"; vectorApellido[2] <- "Gonzalez"; vectorEdad[2] <- 30; vectorTelefono[2] <- 1188776655; vectorEmail[2] <- "maria.gonzalez@example.com"
-	vectorDni[3] <- 30589024; vectorNombre[3] <- "Carlos"; vectorApellido[3] <- "Rodriguez"; vectorEdad[3] <- 22; vectorTelefono[3] <- 1144332211; vectorEmail[3] <- "carlos.rodriguez@example.com"
-	vectorDni[4] <- 44351876; vectorNombre[4] <- "Laura"; vectorApellido[4] <- "Lopez"; vectorEdad[4] <- 28; vectorTelefono[4] <- 1188996655; vectorEmail[4] <- "laura.lopez@example.com"
-	vectorDni[5] <- 26073241; vectorNombre[5] <- "Andres"; vectorApellido[5] <- "Garcia"; vectorEdad[5] <- 35; vectorTelefono[5] <- 1166998877; vectorEmail[5] <- "andres.garcia@example.com"
-	vectorDni[6] <- 39857214; vectorNombre[6] <- "Ana"; vectorApellido[6] <- "Martinez"; vectorEdad[6] <- 29; vectorTelefono[6] <- 1122332211; vectorEmail[6] <- "ana.martinez@example.com"
-	vectorDni[7] <- 35540892; vectorNombre[7] <- "Pablo"; vectorApellido[7] <- "Sanchez"; vectorEdad[7] <- 32; vectorTelefono[7] <- 1199776655; vectorEmail[7] <- "pablo.sanchez@example.com"
-	vectorDni[8] <- 42673850; vectorNombre[8] <- "Gabriela"; vectorApellido[8] <- "Diaz"; vectorEdad[8] <- 26; vectorTelefono[8] <- 1144669988; vectorEmail[8] <- "gabriela.diaz@example.com"
-	vectorDni[9] <- 23895042; vectorNombre[9] <- "Javier"; vectorApellido[9] <- "Fernandez"; vectorEdad[9] <- 31; vectorTelefono[9] <- 1122336677; vectorEmail[9] <- "javier.fernandez@example.com"
-	vectorDni[10] <- 40712589; vectorNombre[10] <- "Carolina"; vectorApellido[10] <- "Ramirez"; vectorEdad[10] <- 27; vectorTelefono[10] <- 1188771122; vectorEmail[10] <- "carolina.ramirez@example.com"
-
-
-//	Para i <- 1 Hasta 10 Con Paso 1
-//		Escribir "DNI: ", vectorDni[i], " Nombre: ", vectorNombre[i], " Apellido: ", vectorApellido[i]
-//		Escribir "Edad: ", vectorEdad[i], " Teléfono: ", vectorTelefono[i], " Email: ", vectorEmail[i]
-//		Escribir("")  // Salto de línea para separar cada conjunto de datos
-//	Fin Para
+	///Esperar 3 segundos
+	///pantallaLogo();
 	
-	//Esperar 3 segundos
-	//pantallaLogo();
-	
-	//devoler booleano para ingresar al menuPrincipal?
-	validacion <- login(long, vectorUsuarios, vectorClaves)
+	///devoler booleano para ingresar al menuPrincipal?
+	validacion <- login(long, vectorUsuarios, vectorClaves);
 	
 	Si validacion = 1 Entonces
-		//pantallaIngreso()
-		menuPrincipal(long, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail, nomDesc, nomHon, nomValH, nomGasto, nomValG)
+		pantallaIngreso();
+		menuPrincipal(long, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail, nomDesc, nomHon, nomValH, nomGasto, nomValG);
 	SiNo
 		contador <- 1;
 		Repetir
@@ -104,9 +71,9 @@ Funcion menuPrincipal(long Por Valor, vectorDni, vectorNombre, vectorApellido, v
 	Leer opcion
 	
 	Segun opcion Hacer
-		1: Borrar Pantalla //este comando borra deja la pantalla limpia
+		1: Borrar Pantalla
 			seleccionPaciente(long, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail, nomDesc, nomHon, nomValH, nomGasto, nomValG)
-		2: Borrar Pantalla //este comando borra deja la pantalla limpia
+		2: Borrar Pantalla
 			//tipoFacturacion()
 		3: Borrar Pantalla
 			pantallaSalida()				
@@ -427,3 +394,40 @@ Funcion pantallaLogo()
 	Esperar 6 segundos
 	Borrar Pantalla	
 FinFuncion
+
+Funcion inicioVectorNomenclador (nomDesc, nomPrec, nomHon, nomValH, nomGasto, nomValG Por Referencia)
+	/// Datos aleatorios de prestaciones medicas
+	nomDesc[1]<-"Hemograma completo";				nomPrec[1]<-50;	nomHon[1]<-22.4;		nomValH[1]<-50;	nomGasto[1]<-50;		nomValG[1]<-6;
+	nomDesc[2]<-"Electrocardiograma (ECG)";			nomPrec[2]<-30;	nomHon[2]<-3.94;		nomValH[2]<-11;	nomGasto[2]<-30;		nomValG[2]<-3;
+	nomDesc[3]<-"Radiografia de torax";				nomPrec[3]<-40;	nomHon[3]<-11.5;		nomValH[3]<-30;	nomGasto[3]<-40;		nomValG[3]<-3;
+	nomDesc[4]<-"Prueba de coagulacion";				nomPrec[4]<-25;	nomHon[4]<-22.4;		nomValH[4]<-36;	nomGasto[4]<-25;		nomValG[4]<-6;
+	nomDesc[5]<-"Evaluacion de funcion renal";		nomPrec[5]<-35;	nomHon[5]<-3.94;		nomValH[5]<-10;	nomGasto[5]<-35;		nomValG[5]<-6;
+	nomDesc[6]<-"Prueba de funcion hepatica";		nomPrec[6]<-30;	nomHon[6]<-3.94;		nomValH[6]<-35;	nomGasto[6]<-30;		nomValG[6]<-3;
+	nomDesc[7]<-"Glicemia en ayunas";				nomPrec[7]<-20;	nomHon[7]<-22.4;		nomValH[7]<-11;	nomGasto[7]<-20;		nomValG[7]<-3;
+	nomDesc[8]<-"Grupo sanguineo y factor Rh";		nomPrec[8]<-15;	nomHon[8]<-22.4;		nomValH[8]<-35;	nomGasto[8]<-15;		nomValG[8]<-6;
+	nomDesc[9]<-"Evaluacion de funcion pulmonar";	nomPrec[9]<-45;	nomHon[9]<-3.94;		nomValH[9]<-34;	nomGasto[9]<-45;		nomValG[9]<-3;
+	nomDesc[10]<-"Prueba de VIH";					nomPrec[10]<-50;	nomHon[10]<-22.4;	nomValH[10]<-48;	nomGasto[10]<-50;	nomValG[10]<-6;
+FinFuncion
+
+Funcion inicioVectorUsuarios(vectorUsuarios, vectorClaves Por Referencia)
+	/// Datos aleatorios de usuarios registrados
+	vectorUsuarios[1] <- "Admin"; vectorClaves[1] <- "Admin"
+	vectorUsuarios[2] <- "User1"; vectorClaves[2] <- "123"
+	vectorUsuarios[3] <- "User2"; vectorClaves[3] <- "234"
+	vectorUsuarios[4] <- "User3"; vectorClaves[4] <- "345"
+	vectorUsuarios[5] <- "User4"; vectorClaves[5] <- "456"
+Fin funcion
+
+Funcion inicioVectorDatosPers(vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail Por Referencia)
+	/// Datos aleatorios de pacientes registrados
+	vectorDni[1] <- 35421987; vectorNombre[1] <- "Juan"; vectorApellido[1] <- "Perez"; vectorEdad[1] <- 25; vectorTelefono[1] <- 1122334455; vectorEmail[1] <- "juan.perez@example.com"
+	vectorDni[2] <- 41170632; vectorNombre[2] <- "Maria"; vectorApellido[2] <- "Gonzalez"; vectorEdad[2] <- 30; vectorTelefono[2] <- 1188776655; vectorEmail[2] <- "maria.gonzalez@example.com"
+	vectorDni[3] <- 30589024; vectorNombre[3] <- "Carlos"; vectorApellido[3] <- "Rodriguez"; vectorEdad[3] <- 22; vectorTelefono[3] <- 1144332211; vectorEmail[3] <- "carlos.rodriguez@example.com"
+	vectorDni[4] <- 44351876; vectorNombre[4] <- "Laura"; vectorApellido[4] <- "Lopez"; vectorEdad[4] <- 28; vectorTelefono[4] <- 1188996655; vectorEmail[4] <- "laura.lopez@example.com"
+	vectorDni[5] <- 26073241; vectorNombre[5] <- "Andres"; vectorApellido[5] <- "Garcia"; vectorEdad[5] <- 35; vectorTelefono[5] <- 1166998877; vectorEmail[5] <- "andres.garcia@example.com"
+	vectorDni[6] <- 39857214; vectorNombre[6] <- "Ana"; vectorApellido[6] <- "Martinez"; vectorEdad[6] <- 29; vectorTelefono[6] <- 1122332211; vectorEmail[6] <- "ana.martinez@example.com"
+	vectorDni[7] <- 35540892; vectorNombre[7] <- "Pablo"; vectorApellido[7] <- "Sanchez"; vectorEdad[7] <- 32; vectorTelefono[7] <- 1199776655; vectorEmail[7] <- "pablo.sanchez@example.com"
+	vectorDni[8] <- 42673850; vectorNombre[8] <- "Gabriela"; vectorApellido[8] <- "Diaz"; vectorEdad[8] <- 26; vectorTelefono[8] <- 1144669988; vectorEmail[8] <- "gabriela.diaz@example.com"
+	vectorDni[9] <- 23895042; vectorNombre[9] <- "Javier"; vectorApellido[9] <- "Fernandez"; vectorEdad[9] <- 31; vectorTelefono[9] <- 1122336677; vectorEmail[9] <- "javier.fernandez@example.com"
+	vectorDni[10] <- 40712589; vectorNombre[10] <- "Carolina"; vectorApellido[10] <- "Ramirez"; vectorEdad[10] <- 27; vectorTelefono[10] <- 1188771122; vectorEmail[10] <- "carolina.ramirez@example.com"
+Fin Funcion
