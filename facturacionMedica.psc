@@ -114,7 +114,7 @@ Funcion seleccionPaciente(long Por Valor, vectorDni, vectorNombre, vectorApellid
 	Fin Segun
 FinFuncion
 
-Funcion ingresoDatos(flagTipoPac, long Por valor, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail, nomDesc, nomHon, nomValH, nomGasto, nomValG Por Referencia)
+Funcion ingresoDatos(flagTipoPac Por Valor, long Por valor, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail, nomDesc, nomHon, nomValH, nomGasto, nomValG Por Referencia)
 	//altaConsumidor()
 	Definir dni, cuit Como Entero
 	Escribir "Dentro de la funcion de ingresos de datos"
@@ -142,7 +142,7 @@ Funcion ingresoDatos(flagTipoPac, long Por valor, vectorDni, vectorNombre, vecto
 						Escribir "Presione enter para continuar"
 						Esperar Tecla
 						Borrar Pantalla
-						seleccionServicios(long, nomDesc, nomHon, nomValH, nomGasto, nomValG)
+						seleccionServicios(flagTipoPac, long, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail, nomDesc, nomHon, nomValH, nomGasto, nomValG)
 					SiNo
 						///aca va opciones de dar de alta 
 					FinSi
@@ -151,6 +151,7 @@ Funcion ingresoDatos(flagTipoPac, long Por valor, vectorDni, vectorNombre, vecto
 				Esperar 1200 milisegundos
 			FinSi
 		2:
+			///Utilizar el mismo vector agregando la condicion de descuento por obra social/plan
 			Escribir "Ingrese el DNI: "
 			leer dni
 			si dni > 99999999 O dni < 1000000 Entonces
@@ -193,8 +194,9 @@ Funcion altaConsumidor()
 	
 FinFuncion
 
-Funcion seleccionServicios(long, nomDesc, nomHon, nomValH, nomGasto, nomValG Por Referencia)
-	Definir aux, selec, limite, num Como Entero
+Funcion seleccionServicios(flagTipo Por Valor, long, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail, nomDesc, nomHon, nomValH, nomGasto, nomValG Por Referencia)
+	
+	Definir aux, selec, limite, num, opc Como Entero
 	Dimension seleccion[10]
 	aux <- -1; limite <- 0;
 	
@@ -238,7 +240,6 @@ Funcion seleccionServicios(long, nomDesc, nomHon, nomValH, nomGasto, nomValG Por
 	Hasta Que aux = 0 O limite = 10
 	
 	///muestra el listado de servicios seleccionados
-	
 	Escribir "Servicios seleccionados: ";
 	Escribir "";
 	Para i <- 1 hasta limite - 1 con paso 1 Hacer
@@ -253,13 +254,13 @@ Funcion seleccionServicios(long, nomDesc, nomHon, nomValH, nomGasto, nomValG Por
 	
 	Segun selec Hacer
 		1: Borrar Pantalla
-			emitirFactura(num, limite, seleccion, nomDesc, nomHon, nomValH, nomGasto, nomValG)
+			emitirFactura(flagTipo, num, limite, seleccion, nomDesc, nomHon, nomValH, nomGasto, nomValG)
 			Escribir "Presione enter para continuar"
 			Esperar Tecla
 			Borrar pantalla
 			menuPrincipal(long, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail, nomDesc, nomHon, nomValH, nomGasto, nomValG)
 		2:	Borrar pantalla
-			seleccionServicios(long, nomDesc, nomHon, nomValH, nomGasto, nomValG)
+			seleccionServicios(flagTipo, long, vectorDni, vectorNombre, vectorApellido, vectorEdad, vectorTelefono, vectorEmail, nomDesc, nomHon, nomValH, nomGasto, nomValG)
 		De otro modo:
 			Mientras selec <> 1 o selec <> 2 Hacer
 				Escribir ""
@@ -271,8 +272,8 @@ Funcion seleccionServicios(long, nomDesc, nomHon, nomValH, nomGasto, nomValG Por
 	FinSegun
 FinFuncion
 
-Funcion emitirFactura(num, limite, seleccion, nomDesc, nomHon, nomValH, nomGasto, nomValG Por Referencia)
-	Definir acum Como Real
+Funcion emitirFactura(flagTipo, num, limite, seleccion, nomDesc, nomHon, nomValH, nomGasto, nomValG Por Referencia)
+	Definir acum, aux, iva, costo Como Real
 	Escribir "Factura n° " Aleatorio(1456, 2869)
 	
 	Escribir "Servicios seleccionados: ";
@@ -280,18 +281,40 @@ Funcion emitirFactura(num, limite, seleccion, nomDesc, nomHon, nomValH, nomGasto
 	Para i <- 1 hasta limite - 1 con paso 1 Hacer
 		num <- seleccion[i]
 		Escribir i, "- " nomDesc[num];
-		Escribir "Costo: $", (nomHon[num]*nomValH[num])+(nomGasto[num]*nomValG[num]);
-		acum <- acum + (nomHon[num]*nomValH[num])+(nomGasto[num]*nomValG[num]);
+		costo <- (nomHon[num]*nomValH[num])+(nomGasto[num]*nomValG[num]);
+		Escribir "Costo: $ ", costo;
+		acum <- acum + costo;
 		Escribir ""
-		Escribir "Subtotal: $" acum
-		Escribir "IVA (21.00): $" redon(acum * 1.21)
 	FinPara
+	
+	Escribir "Subtotal:    $ " acum
+	funcionImpuestos(flagTipo, acum)
 FinFuncion
 
-Funcion funcionCalculo(num Por Referencia)
-	Escribir "dentro de funcionCalculo"
-	// esto no deberia imprimir por pantalla
-	// ver con Palomino
+Funcion funcionImpuestos(tipo, acum Por Referencia)
+	Definir aux, iva, costo Como Real
+
+	segun tipo hacer
+		1:
+			iva <- acum * 0.21
+			aux <- TRUNC(iva)
+			iva <- (TRUNC((iva - aux)*100)/100) + TRUNC(iva)
+			Escribir "IVA (21.00): $ " iva
+			Escribir "Total:       $ " iva + acum
+			Escribir ""
+			
+		2:
+			Escribir "IVA:          Exento "
+			Escribir "Total:       $ " acum
+			Escribir ""
+		3:
+			iva <- acum * 0.105
+			aux <- TRUNC(iva)
+			iva <- (TRUNC((iva - aux)*100)/100) + TRUNC(iva)
+			Escribir "IVA (10.5):  $ " iva
+			Escribir "Total:       $ " iva + acum
+			Escribir ""
+	FinSegun
 FinFuncion
 
 //Funcion tipoFacturacion
